@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif !important;
+    background-color: #333333
+}
+
+h1 {
+	font-size: 20px !important;
+	box-shadow: none !important;
+	background-image: none !important;
+	padding: 0 10px !important;
+}
+
+ul	{
+	border-top: 1px solid #724f34 !important;
+}
+
+li	{
+	cursor: pointer;
+	border-top: none !important;
+	border-bottom: 1px solid #724f34 !important;
+}
+
+hr {
+	border-top: 1px solid #724f34 !important;
+	margin: 12px 0 !important;
+}
+
+.glyphicon {
+	top: 10px;
+	color: #39113b;
+	font-size: 25px;
+}
+
+#search-input {
+	font-size: 15px !important;
+	background-color: #f2f2f2;
+	width: 229px;
+}
+
+#map {
+	height: 100%;
+	width: 100%;
+}
+
+#map-container {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding-left: 0;
+	padding-right: 0;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+#option-box-container {
+	padding-right: 0;
+	border-right: 1px solid #734f34;
+}
+
+#option-box {
+	height: 100vh;
+	padding: 15px;
+	box-shadow: none !important;
+	background-image: none !important;
+	font-family: Arial !important;
+	background-color: white;
+}
+
+#nav {
+    z-index: 1;
+}

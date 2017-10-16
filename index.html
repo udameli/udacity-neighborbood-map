@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Neighborhood Map</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="static/styles/bootstrap.css">
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.light.min.css">
+	<link rel="stylesheet" type="text/css" href="static/styles/styles.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="sidr">
+			<div id="option-box-container">
+				<div id="option-box">
+					<h1>Places to visit in Rome</h1>
+					<hr>
+					<div class="input-group">
+      					<input type="text" class="form-control" id="search-input" placeholder="Search for..." data-bind="textInput: searchedTitle, event: {keyup: $root.searchPin}">
+    				</div>
+
+    				<div>
+    					<ul data-bind="foreach: pins">
+    						<!-- ko if: matchedSearch -->
+    							<li data-bind="text: title, click: $root.selectPin"></li>
+    						<!-- /ko -->
+    					</ul>
+    				</div>
+				</div>
+			</div>
+		</div>
+		<div id="nav">
+			<a id="simple-menu" href="#sidr"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
+		</div>
+		
+		<div id="map-container">
+			<div id="map"></div>
+		</div>
+	</div>
+
+	<script src="js/lib/knockout-3.4.2.js"></script>
+	<script src="//cdn.jsdelivr.net/jquery/2.2.0/jquery.min.js"></script>
+	<script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
+	<script src="js/main.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDhgJJtUwLtjOI0CJVry1W8tGiu218QK4&libraries=geometry&v=3&callback=loadMap"></script>
+</body>
+</html>
