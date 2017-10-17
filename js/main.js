@@ -1,15 +1,15 @@
-var map;
-var default_icon = './static/images/default_marker_icon.png';
-var selected_icon = './static/images/selected_marker_icon.png';
+let map;
+const default_icon = './static/images/default_marker_icon.png';
+const selected_icon = './static/images/selected_marker_icon.png';
 
-var activePin;
+let activePin;
 
 $(document).ready(function() {
   	$('#simple-menu').sidr();
 });
 
 function loadMap() {
-	var styles = [
+	const styles = [
 	    {
 	        featureType: "administrative",
 	        elementType: "labels.text.fill",
@@ -135,9 +135,10 @@ function loadMap() {
 		});
 
 	ko.applyBindings(new ViewModel());
-};
+}
 
-var locations = [
+// pre-selected locations
+let locations = [
 	{title: 'Fontana Di Trevi', location: {lat: 41.900935, lng: 12.483301}},
 	{title: 'Trattoria Galleria Sciarra', location: {lat: 41.8995, lng: 12.4823}},
 	{title: 'Venchi Gelato Cafe', location: {lat: 41.900112, lng: 12.480693}},
@@ -145,7 +146,7 @@ var locations = [
 	{title: 'Piazza Venezia', location: {lat: 41.895666, lng: 12.482625}}
 ];
 
-var Pin = function(data) {
+let Pin = function(data) {
 	this.title = ko.observable(data.title);
 	this.location = data.location;
 	this.marker = {};
@@ -153,21 +154,22 @@ var Pin = function(data) {
 	this.matchedSearch = ko.observable(true);
 };
 
-var ViewModel = function() {
-	var self = this;
-
+let ViewModel = function() {
+	let self = this;
 	self.pins = ko.observableArray([]);
 
+	// user input typed into a search bar
 	self.searchedTitle = ko.observable('');
-
 	locations.forEach(function(location) {
 		self.pins().push(new Pin(location));
 	});
 
-	var largeInfoWindow = new google.maps.InfoWindow();
+	// infowindow that appears when marker is clicked
+	let largeInfoWindow = new google.maps.InfoWindow();
 
+	// assigning markers to each pin
 	self.pins().forEach(function(pin) {
-		var marker = new google.maps.Marker({
+		let marker = new google.maps.Marker({
 			map: map,
 			position: pin.location,
 			title: pin.title(),
@@ -176,7 +178,7 @@ var ViewModel = function() {
 		});
 		pin.marker = marker;
 		pin.marker.addListener('click', function() {
-			activePin && activePin.setIcon(default_icon); 
+			activePin && activePin.setIcon(default_icon);
 			activePin && activePin.setAnimation(null);
 			activePin = pin.marker;
 			activePin.setIcon(selected_icon);
@@ -185,9 +187,10 @@ var ViewModel = function() {
 		});
 	});
 
+	/* executes when <li> with title is clicked;
+	displays pin info in the infoWindow,
+	fires up animation and changes default icon to selected one */
 	self.selectPin = function(pin) {
-		console.log(pin);
-		/* Display pin with clicked title */
 		activePin && activePin.setIcon(default_icon);
 		activePin && activePin.setAnimation(null);
 		activePin = pin.marker;
@@ -196,12 +199,13 @@ var ViewModel = function() {
 		populateInfoWindow(pin.marker, largeInfoWindow);
 	};
 
+	/* compares user input to existing titles and displays
+	selected pins */
 	self.searchPin = function(viewModel) {
-		console.log(viewModel);
 		activePin && activePin.setIcon(default_icon);
 		activePin && activePin.setAnimation(null);
 		largeInfoWindow.close();
-		var searchedTitle = viewModel.searchedTitle;
+		let searchedTitle = viewModel.searchedTitle;
 		if (searchedTitle() != '') {
 			self.pins().forEach(function(pin) {
 				pin.marker.setMap(null);
@@ -217,8 +221,7 @@ var ViewModel = function() {
 				pin.marker.setMap(map);
 			});
 		}
-	}
-
+	};
 };
 
 function populateInfoWindow(marker, infoWindow) {
@@ -235,12 +238,14 @@ function populateInfoWindow(marker, infoWindow) {
 
 		function getWikiLink() {
 			// Make AJAX call to Wikipedia API
-			var wikiUrlBase = 'https://en.wikipedia.org/w/api.php?format=json&action=query&list=geosearch&gsradius=100&gscoord=';
-			var lat = marker.position.lat();
-			var lng = marker.position.lng();
-			var wikiUrl = wikiUrlBase + lat + '|' + lng;
-			var wikiRequestTimeout = setTimeout(function(){
-				infoWindow.setContent('<div id="wikiLinkWindow">Failed to Get Wikipedia Resources</div>');
+			let wikiUrlBase = 'https://en.wikipedia.org/w/api.php?' +
+			'format=json&action=query&list=geosearch&gsradius=100&gscoord=';
+			let lat = marker.position.lat();
+			let lng = marker.position.lng();
+			let wikiUrl = wikiUrlBase + lat + '|' + lng;
+			let wikiRequestTimeout = setTimeout(function(){
+				infoWindow.setContent('<div id="wikiLinkWindow">Failed to' +
+					'Get Wikipedia Resources</div>');
 				}, 8000);
 			infoWindow.setContent('<div>Loading...</div>');
 			$.ajax({
@@ -248,22 +253,30 @@ function populateInfoWindow(marker, infoWindow) {
 				dataType: 'jsonp',
 				success: function(response) {
 					try {
-						var pageID = response.query.geosearch[0].pageid;
-						var title = response.query.geosearch[0].title;
-						var url = 'https://en.wikipedia.org/wiki?curid=' + pageID;
-						infoWindow.setContent('<div class="text-center">' + marker.title + '</div><hr><div id="wikiLinkWindow">Wikipedia Article: <a href="'+ url + '">' + title + '</a></div>');
+						let pageID = response.query.geosearch[0].pageid;
+						let title = response.query.geosearch[0].title;
+						let url = 'https://en.wikipedia.org/wiki?curid=' + pageID;
+						infoWindow.setContent('<div class="text-center">' +
+							marker.title + '</div><hr><div id="wikiLinkWindow' +
+							'">Wikipedia Article: <a href="'+ url + '">' +
+							title + '</a></div>');
 						clearTimeout(wikiRequestTimeout);
 					} catch(error){
 						//if no geocode
-						infoWindow.setContent('<div class="text-center">' + marker.title + '</div><hr><div>Wikipedia Article: Could not retrieve Wikipedia resources for this location</div>');
-					};	
-				}, 
+						infoWindow.setContent('<div class="text-center">' +
+							marker.title + '</div><hr><div>Wikipedia Article: ' +
+							'Could not retrieve Wikipedia resources for ' +
+							'this location</div>');
+					};
+				},
 				error: function() {
-					infoWindow.setContent('<div class="text-center">' + marker.title + '</div><hr><div>Oops...something went wrong :( Check your network connection');
+					infoWindow.setContent('<div class="text-center">' +
+						marker.title + '</div><hr><div>Oops...something went ' +
+						'wrong :( Check your network connection');
 				}
 			})
 		};
-		
+
 		getWikiLink();
 		infoWindow.open(map, marker)
 	} else {
