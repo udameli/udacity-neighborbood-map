@@ -8,6 +8,13 @@ $(document).ready(function() {
   	$('#simple-menu').sidr();
 });
 
+function loadMapError() {
+	$(document).ready(function() {
+  		$('#map').append('<div class="row text-uppercase text-center error-message">' +
+  			'<h2>Oops! Request to Google Maps failed.</h2></div>');
+	});
+}
+
 function loadMap() {
 	const styles = [
 	    {
@@ -156,6 +163,9 @@ let Pin = function(data) {
 
 let ViewModel = function() {
 	let self = this;
+
+	self.errorMessage = ko.observable();
+
 	self.pins = ko.observableArray([]);
 
 	// user input typed into a search bar
@@ -284,5 +294,11 @@ function populateInfoWindow(marker, infoWindow) {
 	}
 };
 
-
+function gm_authFailure() {
+	$('#map div:first-child').css('display','none');
+	$(document).ready(function() {
+  		$('#map').append('<div class="row text-uppercase text-center error-message">' +
+  			'<h2>Oops! Request to Google Maps failed.</h2></div>');
+	});
+}
 

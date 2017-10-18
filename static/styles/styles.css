@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif !important;
-    background-color: #333333
+    background-image: url('../images/map_placeholder.png');
 }
 
 h1 {
@@ -29,6 +29,14 @@ hr {
 	top: 10px;
 	color: #39113b;
 	font-size: 25px;
+}
+
+.error-message {
+	margin-top: 20%;
+	position: relative;
+	top: 1px;
+	z-index: 1;
+	color: #39113b;
 }
 
 #search-input {
@@ -72,3 +80,4 @@ hr {
     position: relative;
     left: 2px;
 }
+

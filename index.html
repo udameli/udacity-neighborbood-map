@@ -32,9 +32,10 @@
 		<div id="nav">
 			<a id="simple-menu" href="#sidr"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></a>
 		</div>
-		
+
 		<div id="map-container">
-			<div id="map"></div>
+			<div id="map">
+			</div>
 		</div>
 	</div>
 
@@ -42,6 +43,6 @@
 	<script src="//cdn.jsdelivr.net/jquery/2.2.0/jquery.min.js"></script>
 	<script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
 	<script src="js/main.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDhgJJtUwLtjOI0CJVry1W8tGiu218QK4&libraries=geometry&v=3&callback=loadMap"></script>
+	<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDhgJJtUwLtjOI0CJVry1W8tGiu218QK4&libraries=geometry&v=3&callback=loadMap" onerror="loadMapError()"></script>
 </body>
 </html>
