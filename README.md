@@ -2,6 +2,8 @@
 
 This is a single page application that has been developed as a part of Udacity's Full Stack Web Development Nano Degree. This application features a Google map of a city with 5 pre-selected locations and various ways of browsing through them. Additionally, the application uses the third party data (Wikipedia API) to provide extra information about any given location.
 
+![Page screenshot](/static/images/app_screenshot.png?raw=true "Page screenshot")
+
 ## Getting Started
 
 Download:
